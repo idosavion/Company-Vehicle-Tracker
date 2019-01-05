@@ -1,8 +1,8 @@
 import email
 import os
 import shutil
-
-import ImageScraper
+import ImageHandler
+import LogWriter
 
 
 class EMailHandler:
@@ -13,14 +13,18 @@ class EMailHandler:
         self.email_path = path
 
     def process_email(self):
-        attachments = self.extract_files()
-        image = attachments[0]  # largest file
-        image_handler = ImageScraper.ImageHandler(image)
-        image_attributes = image_handler.extract_attributes()
-        print(image_attributes)
-
-    def extract_files(self, dest_folder='tmp'):
         msg = email.message_from_file(open(self.email_path))
+        attachments = self.extract_attachments('tmp', msg)
+        image = attachments[0]  # largest file - currently assuming it's the largest photo in email
+        image_attributes = ImageHandler.extract_attributes(image)
+        attribs = image_attributes.copy()
+        print(attribs)
+        attribs["Driver"] = msg["From"]
+        LogWriter.write_log(attribs)
+
+
+
+    def extract_attachments(self, dest_folder, msg):
         if os.path.exists(dest_folder):
             shutil.rmtree(dest_folder)
         os.mkdir(dest_folder)
@@ -31,19 +35,16 @@ class EMailHandler:
                 filename = attachment.get_filename()
                 full_path = os.path.join(dest_folder, filename)
                 open(full_path, 'wb').write(attachment.get_payload(decode=True))
-                extracted_attachments.append(filename)
+                extracted_attachments.append(full_path)
         extracted_attachments.sort(key=os.path.getsize)
         return extracted_attachments
 
-    def get_sender(self):
-        msg = email.message_from_file(open(self.email_path))
-        pass
 
 
 
 # ih = ImageHandler('images/Img_1.jpg')
 # print(ih.extract_attributes())
-eh = EMailHandler('original_msg.txt')
+eh = EMailHandler('example.eml')
 # eh.extract_files()
 eh.process_email()
-eh.get_sender()
+

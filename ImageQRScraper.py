@@ -1,8 +1,7 @@
-
 import cv2
 import pyzbar.pyzbar as pyzbar
-
 import ImageScraper
+
 
 
 def decode(image_path):
@@ -14,11 +13,5 @@ def decode(image_path):
         for decodedObjects in decoded_objects_list:
             for obj in decodedObjects:
                 if obj.type == 'QRCODE':
-                    print('Type : ', obj.type)
-                    print('Data : ', obj.data, '\n')
-                    return obj.data
+                    return obj.data.decode('ASCII')
 
-#
-# qrs = decode('images/Img_2.jpg')
-# qrs2 = decode('images/Img_1.jpg')
-# qrs3 = decode('images/Img_3.jpg')
