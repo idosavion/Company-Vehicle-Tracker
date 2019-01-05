@@ -41,7 +41,8 @@ def _extract_odometer_text(img_for_box_extraction_path, destanation_folder):
             cropped = img[y:y + h, x:x + w]
             cv.imwrite(os.path.join(destanation_folder, str(i) + '.jpg'), cropped)
 
-
-print(find_odometer_text('images/Img_2.jpg'))
-print(find_odometer_text('images/Img_1.jpg'))
-# find_odometer_text('images/Img_1.jpg')
+#
+# print(find_odometer_text('images/Img_2.jpg'))
+# print(find_odometer_text('images/Img_1.jpg'))
+# print(find_odometer_text('images/Img_3.jpg'))
+# # find_odometer_text('images/Img_1.jpg')
