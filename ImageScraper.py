@@ -21,3 +21,4 @@ def divide_image_to_tiles(im, tile):
             curr_tile = im[w * col:w * (col + 1), h * row:h * (row + 1), :]
             tiles.append(curr_tile)
     return tiles
+
