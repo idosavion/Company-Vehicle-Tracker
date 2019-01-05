@@ -7,20 +7,21 @@ from ImageScraper import ImageScraper
 
 
 class ImageQRScraper(ImageScraper):
-
-    def decode(im):
+    def decode(self):
         # Find barcodes and QR codes
-        decodedObjects = pyzbar.decode(im)
+        im = cv2.imread(self.image_path)
+        decodedObjects = pyzbar.decode(im,scan_locations=True)
 
-        # Print results - only for debugging
+        # Print results
         for obj in decodedObjects:
             print('Type : ', obj.type)
             print('Data : ', obj.data, '\n')
 
         return decodedObjects
 
+
     # Display barcode and QR code location
-    def display(self, im, decodedObjects):
+    def display(im, decodedObjects):
         # Loop over all decoded objects
         for decodedObject in decodedObjects:
             points = decodedObject.polygon
@@ -30,7 +31,7 @@ class ImageQRScraper(ImageScraper):
                 hull = cv2.convexHull(np.array([point for point in points], dtype=np.float32))
                 hull = list(map(tuple, np.squeeze(hull)))
             else:
-                hull = points;
+                hull = points
 
             # Number of points in the convex hull
             n = len(hull)
@@ -40,6 +41,8 @@ class ImageQRScraper(ImageScraper):
                 cv2.line(im, hull[j], hull[(j + 1) % n], (255, 0, 0), 3)
 
         # Display results
-        imS = cv2.resize(im, (960, 540))
-        cv2.imshow(self.image_path,imS)
-        cv2.waitKey(0)
+
+
+jpg = 'images/Img_3.jpg'
+qr_scraper = ImageQRScraper(jpg)
+print(qr_scraper.decode())
