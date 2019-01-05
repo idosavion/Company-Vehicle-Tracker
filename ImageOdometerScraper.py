@@ -5,7 +5,7 @@ import shutil
 import cv2 as cv
 from pytesseract import image_to_string
 
-CROPPED_FOLDER = 'cropped'
+CROPPED_FOLDER = "cropped"
 
 
 def find_odometer_text(image_path):
