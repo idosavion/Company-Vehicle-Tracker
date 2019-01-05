@@ -1,4 +1,4 @@
-import cv2
+import cv2 as cv
 import pyzbar.pyzbar as pyzbar
 import ImageScraper
 
@@ -6,7 +6,7 @@ import ImageScraper
 
 def decode(image_path):
     # Find barcodes and QR codes
-    im = cv2.imread(image_path)
+    im = cv.imread(image_path)
     for tile in [1, 2, 3, 5, 7]:
         tiles = ImageScraper.divide_image_to_tiles(im, tile)
         decoded_objects_list = [pyzbar.decode(t) for t in tiles]
