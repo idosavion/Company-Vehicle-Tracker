@@ -32,11 +32,11 @@ def _determine_value(folder_location):
     """
     full_paths = [os.path.join(folder_location, f) for f in os.listdir(folder_location)]
     text_from_images = [image_to_string(p) for p in full_paths]
-    only_digit_text = {re.sub('\D', '', t) for t in text_from_images}
-    only_digit_text.remove('')
+    only_digit_text = {re.sub("\D", '', t) for t in text_from_images}
+    only_digit_text.remove("")
     only_digit_text = {t for t in only_digit_text if 4 < len(t) < 10}
     shutil.rmtree(folder_location)
-    return only_digit_text
+    return only_digit_text if len(only_digit_text) > 0 else {"0"}
 
 
 def _extract_odometer_text(img_for_box_extraction_path, destanation_folder):

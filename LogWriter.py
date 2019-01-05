@@ -6,6 +6,11 @@ VEHICLE_LOG_CSV = "vehicle_log.csv"
 
 
 def write_log(log_data_dict):
+    """
+    write the new rows to log file, append them at the end if file is already exist
+    :param log_data_dict: dictionary with data to add
+    :return:
+    """
     header = ["Driver", "License plate", "Odometer", "Location"]
     rows = []
     for odometer_read in log_data_dict.get("Odometer"):
