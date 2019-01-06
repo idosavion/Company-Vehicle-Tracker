@@ -29,7 +29,7 @@ def process_eml_file(email_path):
     """
     msg = email.message_from_file(open(email_path))
     attachments = _extract_attachments(TEMP_FOLDER_PATH, msg)
-    image = attachments[0]  # largest file - currently assuming it's the largest photo in email
+    image = attachments[-1]  # largest file - currently assuming it's the largest photo in email
     extracted_data = ImageHandler.extract_attributes(image)
     extracted_data["Driver"] = msg["From"]
     LogWriter.write_log(extracted_data)

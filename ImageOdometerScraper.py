@@ -19,7 +19,7 @@ def find_odometer_text(image_path):
     if len(values) == 0:
         print("No Text was found")
     if len(values) > 1:
-        print("More then 1 image was found, multiply rows will be inserted to log file")
+        print("Odometer text OCR returned ambiguous results, multiply rows will be inserted to log file")
     return values
 
 
